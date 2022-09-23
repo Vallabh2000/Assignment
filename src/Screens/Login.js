@@ -1,3 +1,4 @@
+import {Formik} from 'formik';
 import React, {Component, useLayoutEffect} from 'react';
 import {View, Text, Button, TextInput, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
@@ -81,54 +82,92 @@ class Login extends NavHeader {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Login Here</Text>
-        <View
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'flex-start',
-            height: 150,
-            marginVertical: 30,
-          }}>
-          <Text>E-mail id</Text>
-          <TextInput
-            textContentType="emailAddress"
-            placeholder="Enter Email"
-            style={styles.input}
-          />
-          <Text>Password</Text>
-          <View style={styles.input}>
-            <TextInput
-              textContentType="password"
-              placeholder="Password"
-              secureTextEntry={this.state.passShow}
-            />
-            <TouchableOpacity
-              onPress={() =>
-                // this.setState(this.state({passShow: false}));
-                this.setState({
-                  passShow: !this.state.passShow,
-                })
-              }>
-              {this.state.passShow ? (
-                <VectorIcon
-                  size={20}
-                  type="Ionicons"
-                  name="eye-outline"
-                  color={'#000'}
-                  style={{}}
+        <Formik
+          initialValues={{emailId: '', password: ''}}
+          // onSubmit={(values,
+          //   {resetForm}) => {
+          //   this.props.setUser(values);
+          //   resetForm({values: ''}, values => console.log(values));
+          // }}
+          onSubmit={values => console.log(values)}>
+          {({
+            handleSubmit,
+            isValid,
+            handleChange,
+            values,
+            setFieldValue,
+            dirty,
+          }) => (
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                alignItems: 'flex-start',
+                height: 200,
+                marginVertical: 30,
+              }}>
+              <Text>E-mail id</Text>
+              <TextInput
+                name="emailId"
+                value={values.emailId}
+                onChangeText={text => setFieldValue('emailId', text)}
+                // textContentType="emailAddress"
+                placeholder="Enter Email"
+                style={styles.input}
+              />
+              <Text>Password</Text>
+              <View style={styles.input}>
+                <TextInput
+                  name="password"
+                  value={values.password}
+                  onChangeText={text => setFieldValue('password', text)}
+                  // textContentType="password"
+                  placeholder="Password"
+                  secureTextEntry={this.state.passShow}
                 />
-              ) : (
-                <VectorIcon
-                  size={20}
-                  type="Ionicons"
-                  name="eye-off-outline"
-                  color={'#000'}
-                  style={{}}
+                <TouchableOpacity
+                  onPress={() =>
+                    // this.setState(this.state({passShow: false}));
+                    this.setState({
+                      passShow: !this.state.passShow,
+                    })
+                  }>
+                  {this.state.passShow ? (
+                    <VectorIcon
+                      size={20}
+                      type="Ionicons"
+                      name="eye-outline"
+                      color={'#000'}
+                      style={{}}
+                    />
+                  ) : (
+                    <VectorIcon
+                      size={20}
+                      type="Ionicons"
+                      name="eye-off-outline"
+                      color={'#000'}
+                      style={{}}
+                    />
+                  )}
+                </TouchableOpacity>
+              </View>
+              <View style={{alignSelf: 'center'}}>
+                <Button
+                  title="Login"
+                  onPress={
+                    handleSubmit
+                    // navigation.setParams({
+                    //   backProps: {
+                    //     containerStyle: {},
+                    //   },
+                    // });
+                    // navigation.navigate('Home');
+                  }
                 />
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
+              </View>
+            </View>
+          )}
+        </Formik>
         <View
           style={{
             display: 'flex',
@@ -136,17 +175,6 @@ class Login extends NavHeader {
             flexDirection: 'column',
             height: 90,
           }}>
-          <Button
-            title="Login"
-            onPress={() => {
-              // navigation.setParams({
-              //   backProps: {
-              //     containerStyle: {},
-              //   },
-              // });
-              navigation.navigate('Home');
-            }}
-          />
           <Text style={{marginTop: 30, marginBottom: 5}}>Sign Up Here</Text>
           <Button
             title="Sign Up"

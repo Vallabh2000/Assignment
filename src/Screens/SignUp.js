@@ -53,7 +53,7 @@ class SignUp extends Component {
     };
   }
   render() {
-    console.log(this.props.userData);
+    // console.log(this.props.userData);
     return (
       <>
         <View
