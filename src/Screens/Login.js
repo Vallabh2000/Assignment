@@ -4,11 +4,15 @@ import {View, Text, Button, TextInput, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {VectorIcon} from '../assets/vectoreicon';
 import NavHeader from './Header';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {element} from 'prop-types';
+import {authentication} from '../../store/userSlice';
 
 class Login extends NavHeader {
   constructor(props) {
     super(props);
-    this.state = {passShow: true};
+    this.state = {passShow: true, isAuth: false};
+    // console.log(this.state.isAuth, '123');
     props.navigation.setParams({
       title: 'Login Page',
       imgProps: {source: require('../assets/image.jpeg')},
@@ -79,17 +83,40 @@ class Login extends NavHeader {
   // };
   render() {
     const {navigation} = this.props;
+    // const {isAuth} = this.state.isAuth;
+    // console.log({isAuth}, '123');
+    const {userData} = this.props;
+    function onLogin(loginValues) {
+      const isUser = userData.usersArray.find(
+        ele =>
+          ele.email === loginValues?.emailId &&
+          ele.password === loginValues?.password,
+      );
+      // console.log(isUser);
+      if (isUser) {
+        // this.props.setUser(true);
+        // this.setState({isAuth: true});
+        // console.log('true');
+        // navigation.navigate('Home');
+      } else {
+        // console.log('error');
+      }
+    }
+    console.log(this.props.userData.isAuth);
+
+    console.tron.log(userData);
+
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Login Here</Text>
         <Formik
           initialValues={{emailId: '', password: ''}}
-          // onSubmit={(values,
-          //   {resetForm}) => {
-          //   this.props.setUser(values);
-          //   resetForm({values: ''}, values => console.log(values));
-          // }}
-          onSubmit={values => console.log(values)}>
+          onSubmit={(values, {resetForm}) => {
+            // console.log(values, 'og');
+            onLogin(values);
+            this.props.setUser(true);
+            resetForm({values: ''});
+          }}>
           {({
             handleSubmit,
             isValid,
@@ -110,7 +137,7 @@ class Login extends NavHeader {
               <TextInput
                 name="emailId"
                 value={values.emailId}
-                onChangeText={text => setFieldValue('emailId', text)}
+                onChangeText={handleChange('emailId')}
                 // textContentType="emailAddress"
                 placeholder="Enter Email"
                 style={styles.input}
@@ -120,7 +147,7 @@ class Login extends NavHeader {
                 <TextInput
                   name="password"
                   value={values.password}
-                  onChangeText={text => setFieldValue('password', text)}
+                  onChangeText={handleChange('password')}
                   // textContentType="password"
                   placeholder="Password"
                   secureTextEntry={this.state.passShow}
@@ -186,7 +213,22 @@ class Login extends NavHeader {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: payload => {
+      dispatch(authentication(payload));
+      // console.log(payload);
+    },
+  };
+};
+
+export const mapStateToProps = (state, props) => {
+  return {
+    userData: state.users,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   input: {

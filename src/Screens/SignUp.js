@@ -53,7 +53,7 @@ class SignUp extends Component {
     };
   }
   render() {
-    // console.log(this.props.userData);
+    console.log(this.props.userData);
     return (
       <>
         <View
@@ -269,8 +269,11 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state, props) => {
   return {
     userData: state.users,
+    // console.log(state)
   };
 };
+
+console.log(mapStateToProps);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
 

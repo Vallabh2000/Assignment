@@ -83,7 +83,7 @@ class tabBarComponent extends Component {
 const TabStack = createBottomTabNavigator(
   {
     Home: {
-      screen: Auth,
+      screen: HomePage,
       navigationOptions: {
         tabBarIcon: ({focused}) => (
           <Icon size={20} name="home" color={focused ? 'blue' : 'lightgray'} />

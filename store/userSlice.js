@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-export const userSlice = createSlice({
-  name: 'users',
-  initialState: [
+const initialState = {
+  isAuth: false,
+  usersArray: [
     {
       confirmPassword: 'vallabh@123',
       date: '02-09-2022',
@@ -24,15 +24,25 @@ export const userSlice = createSlice({
       phoneNumber: '9807654321',
     },
   ],
+};
+
+export const userSlice = createSlice({
+  name: 'users',
+  initialState,
   reducers: {
-    addUsers(state, action) {
-      state.push(action.payload);
-      //   console.log(state);
+    addUsers: (state, action) => {
+      state.usersArray.push(action.payload);
+      // console.log(state);
+    },
+    authentication: (state, action) => {
+      // console.log('Login payload', action.payload);
+      state.isAuth = action.payload;
+      console.log(state.isAuth, 'login');
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {addUsers} = userSlice.actions;
+export const {addUsers, authentication} = userSlice.actions;
 
 export default userSlice.reducer;
