@@ -129,9 +129,7 @@ export default createStackNavigator(
   {
     TabStack,
   },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-  },
+  // {
+  //   defaultNavigationOptions: {},
+  // },
 );

@@ -7,6 +7,7 @@ import NavHeader from './Header';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {element} from 'prop-types';
 import {authentication} from '../../store/userSlice';
+import App, {setUserSession} from '../../App';
 
 class Login extends NavHeader {
   constructor(props) {
@@ -15,7 +16,7 @@ class Login extends NavHeader {
     // console.log(this.state.isAuth, '123');
     props.navigation.setParams({
       title: 'Login Page',
-      imgProps: {source: require('../assets/image.jpeg')},
+      // imgProps: {source: require('../assets/image.jpeg')},
       headerBackProps: {
         color: 'lightgray',
       },
@@ -87,24 +88,32 @@ class Login extends NavHeader {
     // console.log({isAuth}, '123');
     const {userData} = this.props;
     function onLogin(loginValues) {
-      const isUser = userData.usersArray.find(
-        ele =>
-          ele.email === loginValues?.emailId &&
-          ele.password === loginValues?.password,
-      );
-      // console.log(isUser);
-      if (isUser) {
-        // this.props.setUser(true);
-        // this.setState({isAuth: true});
-        // console.log('true');
-        // navigation.navigate('Home');
-      } else {
-        // console.log('error');
+      if (
+        userData.usersArray.find(
+          ele =>
+            ele.email === loginValues?.emailId &&
+            ele.password === loginValues?.password,
+        )
+      ) {
+        setUserSession(true);
+        console.tron.log(setUserSession());
+        navigation.navigate('Home');
       }
-    }
-    console.log(this.props.userData.isAuth);
 
-    console.tron.log(userData);
+      // console.log(isUser);
+      // if (isUser) {
+      //   // this.props.setUser(true);
+      //   // this.setState({isAuth: true});
+
+      //   console.log('true');
+      //   // navigation.navigate('Home');
+      // } else {
+      //   console.log('error');
+      // }
+    }
+    // console.log(this.props.userData.isAuth);
+
+    // console.tron.log(userData);
 
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -114,7 +123,8 @@ class Login extends NavHeader {
           onSubmit={(values, {resetForm}) => {
             // console.log(values, 'og');
             onLogin(values);
-            this.props.setUser(true);
+            // setUserSession(this.props.setUser(values));
+
             resetForm({values: ''});
           }}>
           {({
@@ -138,7 +148,6 @@ class Login extends NavHeader {
                 name="emailId"
                 value={values.emailId}
                 onChangeText={handleChange('emailId')}
-                // textContentType="emailAddress"
                 placeholder="Enter Email"
                 style={styles.input}
               />
@@ -148,7 +157,6 @@ class Login extends NavHeader {
                   name="password"
                   value={values.password}
                   onChangeText={handleChange('password')}
-                  // textContentType="password"
                   placeholder="Password"
                   secureTextEntry={this.state.passShow}
                 />

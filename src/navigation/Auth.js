@@ -18,6 +18,10 @@ export default createStackNavigator(
       screen: SignUp,
       navigationOptions: {},
     },
+    HomePage: {
+      screen: HomePage,
+      navigationOptions: {},
+    },
   },
   {
     initialRouteName: 'Login',

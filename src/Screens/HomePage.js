@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Button,
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {clearUserSession, getUserSession, setUserSession} from '../../App';
+import {fetchUserById} from '../../store/userSlice';
 import {VectorIcon} from '../assets/vectoreicon';
 import NavHeader from './Header';
 
@@ -7,11 +16,21 @@ class HomePage extends NavHeader {
   constructor(props) {
     super(props);
     console.log(props);
+
+    // props.navigation.setParams({
+    //   title: 'Login Page',
+    //   imgProps: {source: require('../assets/image.jpeg')},
+    //   headerBackProps: {
+    //     color: 'lightgray',
+    //     headerStyle: {marginTop: 100},
+    //   },
+    // });
+
     props.navigation.setParams({
       title: 'Home Screen',
       backProps: {
         // buttonStyle: {backgroundColor: 'yellow'},
-        onPress: () => props.navigation.goBack(),
+        onPress: () => this.props.navigation.goBack(),
       },
       notiBtnProps: {
         type: 'Ionicons',
@@ -79,7 +98,15 @@ class HomePage extends NavHeader {
   //     title: false,
   //   };
   // };
+
   render() {
+    const LogOut = () => {
+      setUserSession(false);
+      clearUserSession();
+      this.props.navigation.navigate('Login');
+    };
+
+    fetchUserById();
     return (
       <SafeAreaView
         style={{
@@ -89,6 +116,12 @@ class HomePage extends NavHeader {
           alignItems: 'center',
         }}>
         <Text>Hello</Text>
+        <Button color={'red'} title="log out" onPress={LogOut} />
+        <Button
+          color={'red'}
+          title="log in"
+          onPress={() => setUserSession(true)}
+        />
       </SafeAreaView>
     );
   }

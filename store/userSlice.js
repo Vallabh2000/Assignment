@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   isAuth: false,
@@ -46,3 +46,13 @@ export const userSlice = createSlice({
 export const {addUsers, authentication} = userSlice.actions;
 
 export default userSlice.reducer;
+
+export const fetchUserById = createAsyncThunk(
+  'users/fetchById',
+  async (userId, thunkAPI) => {
+    const response = await fetch(`https://reqres.in/api/users/`);
+    const data = await response.json();
+    const Users = thunkAPI.dispatch(addUsers(data));
+    console.log(Users.payload);
+  },
+);

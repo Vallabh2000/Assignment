@@ -16,6 +16,8 @@ import DatePicker from 'react-native-date-picker';
 import moment, {max} from 'moment';
 import CustomInput from '../../Components/CustomInput';
 import {VectorIcon} from '../assets/vectoreicon';
+import {setUserSession} from '../../App';
+import NavHeader from './Header';
 
 const signUpValidationSchema = yup.object().shape({
   firstName: yup.string().max(25, '').required('First name is required'),
@@ -43,7 +45,7 @@ const signUpValidationSchema = yup.object().shape({
     .required('Confirm password is required'),
 });
 
-class SignUp extends Component {
+class SignUp extends NavHeader {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +53,16 @@ class SignUp extends Component {
       passShow: true,
       cPassShow: true,
     };
+
+    // const {navigation} = this.props;
+    props.navigation.setParams({
+      title: 'Login Page',
+      backProps: {onPress: () => this.props.navigation.goBack()},
+      // imgProps: {source: require('../assets/image.jpeg')},
+      headerBackProps: {
+        color: 'lightgray',
+      },
+    });
   }
   render() {
     console.log(this.props.userData);
@@ -79,7 +91,8 @@ class SignUp extends Component {
               confirmPassword: '',
             }}
             onSubmit={(values, {resetForm}) => {
-              this.props.setUser(values);
+              setUserSession(setItem(this.props.setUser(values)));
+              console.log(setUserSession());
               resetForm({values: ''});
             }}>
             {({

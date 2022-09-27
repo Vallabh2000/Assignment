@@ -87,13 +87,20 @@ export class NavHeader extends Component {
     const headerBackground = () => {
       const headerBackProps = navigation.getParam('headerBackProps');
       const color = headerBackProps?.color;
+      const headerStyle = headerBackProps?.headerStyle;
       return (
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: color ? color : 'lightgray',
-          }}></View>
+        <SafeAreaView>
+          <View
+            style={[
+              {
+                flex: 1,
+                width: '100%',
+                height: '100%',
+                backgroundColor: color ? color : 'lightgray',
+              },
+              headerStyle,
+            ]}></View>
+        </SafeAreaView>
       );
     };
     return {
