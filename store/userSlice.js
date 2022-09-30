@@ -53,6 +53,6 @@ export const fetchUserById = createAsyncThunk(
     const response = await fetch(`https://reqres.in/api/users/`);
     const data = await response.json();
     const Users = thunkAPI.dispatch(addUsers(data));
-    console.log(Users.payload);
+    // console.log(Users.payload);
   },
 );

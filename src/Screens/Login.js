@@ -96,7 +96,7 @@ class Login extends NavHeader {
         )
       ) {
         setUserSession(true);
-        console.tron.log(setUserSession());
+        console.log(setUserSession(), 'login');
         navigation.navigate('Home');
       }
 

@@ -15,8 +15,8 @@ class App extends React.Component {
     this.state = {loggedIn: false};
   }
 
-  componentDidMount() {
-    const logIn = getUserSession();
+  async componentDidMount() {
+    const logIn = await getUserSession();
     this.setState({loggedIn: logIn});
   }
 
@@ -37,7 +37,7 @@ export const setUserSession = async props => {
   try {
     // await AsyncStorage.clear();
     await AsyncStorage.setItem('session', props.toString());
-    console.log(props, 'storage');
+    console.log(props, 'store');
   } catch (err) {
     await AsyncStorage.setItem('session', props);
   }
@@ -59,7 +59,7 @@ export const getUserSession = async () => {
       loggedIn = loggedIn == 'true';
     }
 
-    console.log(loggedIn, 'out');
+    console.log(loggedIn, 'get');
     return loggedIn;
   } catch (err) {
     console.tron.log('Something went wrong on session');

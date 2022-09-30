@@ -11,6 +11,9 @@ import Auth from './Auth';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Animated, TouchableOpacity, View} from 'react-native';
 import {Component} from 'react';
+import Plan from './Planner';
+import {hp} from '../responsive';
+import PlannerTab from './PlannerTab';
 
 class tabBarComponent extends Component {
   render() {
@@ -37,7 +40,7 @@ class tabBarComponent extends Component {
             justifyContent: 'space-around',
             alignItems: 'center',
             borderRadius: 10,
-            height: 60,
+            height: hp('7%'),
             paddingHorizontal: 20,
             marginVertical: 5,
             marginHorizontal: 20,
@@ -93,6 +96,7 @@ const TabStack = createBottomTabNavigator(
     SettingPage: {
       screen: SettingPage,
       navigationOptions: {
+        title: 'Settings',
         tabBarIcon: ({focused}) => (
           <Icon
             size={20}
@@ -102,8 +106,8 @@ const TabStack = createBottomTabNavigator(
         ),
       },
     },
-    Profile: {
-      screen: Drawer,
+    Plan: {
+      screen: PlannerTab,
       navigationOptions: {
         tabBarIcon: ({focused}) => (
           <Icon
@@ -117,6 +121,7 @@ const TabStack = createBottomTabNavigator(
   },
   {
     initialRouteName: 'Home',
+    defaultNavigationOptions: {title: 'Setting'},
     tabBarComponent: tabBarComponent,
     tabBarOptions: {
       activeTintColor: 'blue',
@@ -129,7 +134,10 @@ export default createStackNavigator(
   {
     TabStack,
   },
-  // {
-  //   defaultNavigationOptions: {},
-  // },
+  {
+    defaultNavigationOptions: {
+      headerShown: true,
+      headerTransparent: true,
+    },
+  },
 );

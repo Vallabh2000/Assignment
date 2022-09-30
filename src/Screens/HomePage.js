@@ -15,7 +15,7 @@ import NavHeader from './Header';
 class HomePage extends NavHeader {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
 
     // props.navigation.setParams({
     //   title: 'Login Page',
@@ -102,8 +102,8 @@ class HomePage extends NavHeader {
   render() {
     const LogOut = () => {
       setUserSession(false);
-      clearUserSession();
-      this.props.navigation.navigate('Login');
+      console.log(getUserSession(), 'out');
+      this.props.navigation.navigate('Auth');
     };
 
     fetchUserById();

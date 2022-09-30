@@ -65,7 +65,7 @@ class SignUp extends NavHeader {
     });
   }
   render() {
-    console.log(this.props.userData);
+    // console.log(this.props.userData);
     return (
       <>
         <View
@@ -92,7 +92,7 @@ class SignUp extends NavHeader {
             }}
             onSubmit={(values, {resetForm}) => {
               setUserSession(setItem(this.props.setUser(values)));
-              console.log(setUserSession());
+              // console.log(setUserSession());
               resetForm({values: ''});
             }}>
             {({
